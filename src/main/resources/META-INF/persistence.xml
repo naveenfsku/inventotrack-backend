@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+                 https://jakarta.ee/xml/ns/persistence
+                 https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <persistence-unit name="InventoTrackPU" transaction-type="JTA">
+
+        <!-- Hibernate Provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- WildFly DataSource -->
+        <jta-data-source>java:/jdbc/InventoTrackDS</jta-data-source>
+
+        <!-- ========================= -->
+        <!-- Entity Classes            -->
+        <!-- ========================= -->
+
+        <class>com.inventotrack.model.User</class>
+
+        <class>com.inventotrack.model.Product</class>
+
+        <class>com.inventotrack.model.CustomerOrder</class>
+
+        <class>com.inventotrack.model.OrderItem</class>
+
+        <class>com.inventotrack.model.Supplier</class>
+
+        <class>com.inventotrack.model.PurchaseOrder</class>
+
+        <class>com.inventotrack.model.PurchaseOrderItem</class>
+
+        <!-- ========================= -->
+        <!-- Hibernate Properties      -->
+        <!-- ========================= -->
+
+        <properties>
+
+            <!-- Automatically update schema during development -->
+            <property name="hibernate.hbm2ddl.auto"
+                      value="update"/>
+
+            <!-- Show generated SQL -->
+            <property name="hibernate.show_sql"
+                      value="true"/>
+
+            <!-- Format SQL -->
+            <property name="hibernate.format_sql"
+                      value="true"/>
+
+            <!-- SQL Server Dialect -->
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.SQLServerDialect"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
