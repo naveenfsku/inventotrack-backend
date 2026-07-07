@@ -12,18 +12,28 @@ import com.inventotrack.model.PurchaseOrderItem;
 import com.inventotrack.model.Supplier;
 import com.inventotrack.service.PurchaseOrderService;
 import com.inventotrack.util.JPAUtil;
+import com.inventotrack.util.LoggerUtil;
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import com.inventotrack.enums.InventoryTransactionType;
+import com.inventotrack.factory.ServiceFactory;
+import com.inventotrack.service.InventoryTransactionService;
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private final PurchaseOrderDAO purchaseOrderDAO;
 
     private final SupplierDAO supplierDAO;
+    private final InventoryTransactionService inventoryTransactionService =
+            ServiceFactory.getInventoryTransactionService();
 
     private final ProductDAO productDAO;
+
+    private static final Logger logger =
+            LoggerUtil.getLogger(OrderServiceImpl.class);
 
     public PurchaseOrderServiceImpl(
             PurchaseOrderDAO purchaseOrderDAO,
@@ -158,6 +168,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         finally {
 
             em.close();
+            logger.info("Purchase order received.");
 
         }
 
@@ -176,6 +187,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         } finally {
 
             em.close();
+            logger.info("Purchase order by ID.");
 
         }
 
@@ -197,6 +209,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         } finally {
 
             em.close();
+            logger.info("All Purchase order.");
 
         }
 
@@ -218,6 +231,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         } finally {
 
             em.close();
+            logger.info("Purchase orders by suppliers.");
 
         }
 
@@ -239,6 +253,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         } finally {
 
             em.close();
+            logger.info("Purchase order by Order status.");
 
         }
 
@@ -281,21 +296,30 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
              */
             if (status == PurchaseOrderStatus.RECEIVED) {
 
-                for (PurchaseOrderItem item :
-                        purchaseOrder.getItems()) {
+                for (PurchaseOrderItem item : purchaseOrder.getItems()) {
 
                     Product product = item.getProduct();
 
+                    int previousStock = product.getStockQuantity();
+
                     product.setStockQuantity(
-
-                            product.getStockQuantity()
-                                    + item.getQuantity()
-
-                    );
+                            previousStock + item.getQuantity());
 
                     product.setUpdatedBy("SYSTEM");
 
                     productDAO.update(em, product);
+
+                    inventoryTransactionService.recordTransaction(
+                            em,
+                            product,
+                            InventoryTransactionType.PURCHASE,
+                            item.getQuantity(),
+                            previousStock,
+                            product.getStockQuantity(),
+                            "PURCHASE_ORDER",
+                            purchaseOrder.getId(),
+                            "Purchase Order Received"
+                    );
 
                 }
 
@@ -328,6 +352,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         finally {
 
             em.close();
+            logger.info("Updated Purchase order status received.");
 
         }
 
@@ -380,7 +405,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         finally {
 
             em.close();
-
+            logger.info("Delete purchase order.");
         }
 
     }

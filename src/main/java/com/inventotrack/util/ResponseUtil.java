@@ -1,6 +1,7 @@
 package com.inventotrack.util;
 
-import com.inventotrack.response.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inventotrack.dto.ApiResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -15,19 +16,40 @@ public final class ResponseUtil {
                                Object data)
             throws IOException {
 
-        ApiResponse<Object> apiResponse =
-                new ApiResponse<>(true, message, data);
+        response.setContentType("application/json");
 
-        JsonUtil.writeJson(response, apiResponse);
+        response.setCharacterEncoding("UTF-8");
+
+        ObjectMapper mapper = JsonUtil.getMapper();
+
+        mapper.writeValue(
+                response.getWriter(),
+                ApiResponse.success(
+                        response.getStatus(),
+                        message,
+                        data,
+                        "")
+        );
+
     }
 
     public static void error(HttpServletResponse response,
                              String message)
             throws IOException {
 
-        ApiResponse<Object> apiResponse =
-                new ApiResponse<>(false, message, null);
+        response.setContentType("application/json");
 
-        JsonUtil.writeJson(response, apiResponse);
+        response.setCharacterEncoding("UTF-8");
+
+        ObjectMapper mapper = JsonUtil.getMapper();
+
+        mapper.writeValue(
+                response.getWriter(),
+                ApiResponse.failure(
+                        response.getStatus(),
+                        message,
+                        "")
+        );
+
     }
 }

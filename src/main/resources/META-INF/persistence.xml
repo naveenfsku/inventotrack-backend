@@ -21,6 +21,8 @@
 
         <class>com.inventotrack.model.User</class>
 
+        <class>com.inventotrack.model.InventoryTransaction</class>
+
         <class>com.inventotrack.model.Product</class>
 
         <class>com.inventotrack.model.CustomerOrder</class>

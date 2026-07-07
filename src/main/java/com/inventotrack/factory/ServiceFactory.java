@@ -14,7 +14,8 @@ import com.inventotrack.service.SupplierService;
 import com.inventotrack.service.impl.SupplierServiceImpl;
 import com.inventotrack.service.PurchaseOrderService;
 import com.inventotrack.service.impl.PurchaseOrderServiceImpl;
-
+import com.inventotrack.service.InventoryTransactionService;
+import com.inventotrack.service.impl.InventoryTransactionServiceImpl;
 public final class ServiceFactory {
 
     private static final AuthService AUTH_SERVICE =
@@ -32,6 +33,9 @@ public final class ServiceFactory {
                     DAOFactory.getUserDAO(),
                     DAOFactory.getProductDAO()
             );
+    private static final InventoryTransactionService
+            inventoryTransactionService =
+            new InventoryTransactionServiceImpl();
     private static final ReportService REPORT_SERVICE =
             new ReportServiceImpl(
                     DAOFactory.getReportDAO());
@@ -75,5 +79,12 @@ public final class ServiceFactory {
 
     public static PurchaseOrderService getPurchaseOrderService() {
         return PURCHASE_ORDER_SERVICE;
+    }
+
+    public static InventoryTransactionService
+    getInventoryTransactionService() {
+
+        return inventoryTransactionService;
+
     }
 }

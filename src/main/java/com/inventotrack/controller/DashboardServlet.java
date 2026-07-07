@@ -2,6 +2,7 @@ package com.inventotrack.controller;
 
 import com.inventotrack.factory.ServiceFactory;
 import com.inventotrack.service.DashboardService;
+import com.inventotrack.util.ExceptionHandlerUtil;
 import com.inventotrack.util.ResponseUtil;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -31,7 +32,7 @@ public class DashboardServlet extends HttpServlet {
 
         } catch (Exception e) {
 
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ExceptionHandlerUtil.handle(e, resp);
 
             ResponseUtil.error(
                     resp,

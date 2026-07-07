@@ -3,6 +3,7 @@ package com.inventotrack.controller;
 import com.inventotrack.dto.ProductDTO;
 import com.inventotrack.service.ProductService;
 import com.inventotrack.factory.ServiceFactory;
+import com.inventotrack.util.ExceptionHandlerUtil;
 import com.inventotrack.util.JsonUtil;
 import com.inventotrack.util.ResponseUtil;
 import jakarta.servlet.ServletException;
@@ -71,7 +72,7 @@ public class ProductServlet extends HttpServlet {
 
         } catch (Exception e) {
 
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            ExceptionHandlerUtil.handle(e, resp);
 
             ResponseUtil.error(resp, e.getMessage());
 
@@ -102,7 +103,7 @@ public class ProductServlet extends HttpServlet {
 
         } catch (Exception e) {
 
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            ExceptionHandlerUtil.handle(e, resp);
 
             ResponseUtil.error(resp, e.getMessage());
 
@@ -142,7 +143,7 @@ public class ProductServlet extends HttpServlet {
 
         } catch (Exception e) {
 
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            ExceptionHandlerUtil.handle(e, resp);
 
             ResponseUtil.error(resp, e.getMessage());
 
@@ -178,7 +179,7 @@ public class ProductServlet extends HttpServlet {
 
         } catch (Exception e) {
 
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            ExceptionHandlerUtil.handle(e, resp);
 
             ResponseUtil.error(resp,
                     e.getMessage());

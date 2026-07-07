@@ -9,15 +9,21 @@ import com.inventotrack.mapper.UserMapper;
 import com.inventotrack.model.User;
 import com.inventotrack.service.AuthService;
 import com.inventotrack.util.JPAUtil;
+import com.inventotrack.util.LoggerUtil;
 import com.inventotrack.util.PasswordUtil;
 import com.inventotrack.util.SessionUtil;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.logging.Logger;
+
 public class AuthServiceImpl implements AuthService {
 
     private final UserDAO userDAO;
+
+    private static final Logger logger =
+            LoggerUtil.getLogger(OrderServiceImpl.class);
 
     public AuthServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -71,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
         } finally {
 
             em.close();
+            logger.info("Login user created.");
 
         }
 
@@ -114,6 +121,7 @@ public class AuthServiceImpl implements AuthService {
         } finally {
 
             em.close();
+            logger.info("user is logout.");
 
         }
 

@@ -10,16 +10,6 @@
 
     <display-name>InventoTrack</display-name>
 
-    <servlet>
-        <servlet-name>OrderServlet</servlet-name>
-        <servlet-class>com.inventotrack.controller.OrderServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>OrderServlet</servlet-name>
-        <url-pattern>/api/orders</url-pattern>
-    </servlet-mapping>
-
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

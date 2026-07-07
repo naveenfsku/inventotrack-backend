@@ -2,6 +2,7 @@ package com.inventotrack.service.impl;
 
 import com.inventotrack.dao.SupplierDAO;
 import com.inventotrack.dto.SupplierDTO;
+import com.inventotrack.logging.LoggerUtil;
 import com.inventotrack.mapper.SupplierMapper;
 import com.inventotrack.model.Supplier;
 import com.inventotrack.service.SupplierService;
@@ -10,11 +11,14 @@ import com.inventotrack.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class SupplierServiceImpl implements SupplierService {
 
     private final SupplierDAO supplierDAO;
+    private static final Logger logger =
+            LoggerUtil.getLogger(OrderServiceImpl.class);
 
     public SupplierServiceImpl(SupplierDAO supplierDAO) {
         this.supplierDAO = supplierDAO;
@@ -60,6 +64,7 @@ public class SupplierServiceImpl implements SupplierService {
         } finally {
 
             em.close();
+            logger.info("Supplier is created.");
 
         }
     }
@@ -107,6 +112,7 @@ public class SupplierServiceImpl implements SupplierService {
         } finally {
 
             em.close();
+            logger.info("Supplier is updated.");
 
         }
     }
@@ -135,6 +141,7 @@ public class SupplierServiceImpl implements SupplierService {
         } finally {
 
             em.close();
+            logger.info("supplier is deleted.");
 
         }
     }
@@ -149,9 +156,11 @@ public class SupplierServiceImpl implements SupplierService {
             return SupplierMapper.toDTO(
                     supplierDAO.findById(em, id));
 
+
         } finally {
 
             em.close();
+            logger.info("Supplier by id.");
 
         }
     }
@@ -171,6 +180,7 @@ public class SupplierServiceImpl implements SupplierService {
         } finally {
 
             em.close();
+            logger.info("All suppliers by id.");
 
         }
     }
@@ -190,6 +200,7 @@ public class SupplierServiceImpl implements SupplierService {
         } finally {
 
             em.close();
+            logger.info("Search suppliers by id.");
 
         }
     }

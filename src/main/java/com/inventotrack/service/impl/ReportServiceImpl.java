@@ -6,13 +6,17 @@ import com.inventotrack.model.CustomerOrder;
 import com.inventotrack.service.ReportService;
 import com.inventotrack.util.JPAUtil;
 
+import com.inventotrack.util.LoggerUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ReportServiceImpl implements ReportService {
 
     private final ReportDAO reportDAO;
+    private static final Logger logger =
+            LoggerUtil.getLogger(OrderServiceImpl.class);
 
     public ReportServiceImpl(ReportDAO reportDAO) {
         this.reportDAO = reportDAO;
@@ -30,6 +34,7 @@ public class ReportServiceImpl implements ReportService {
         } finally {
 
             em.close();
+            logger.info("Get revenue report .");
 
         }
 
@@ -47,6 +52,7 @@ public class ReportServiceImpl implements ReportService {
         } finally {
 
             em.close();
+            logger.info("sales report.");
 
         }
 
@@ -64,6 +70,7 @@ public class ReportServiceImpl implements ReportService {
         } finally {
 
             em.close();
+            logger.info("Inventory report.");
 
         }
 
@@ -81,6 +88,7 @@ public class ReportServiceImpl implements ReportService {
         } finally {
 
             em.close();
+            logger.info("Top selling products report.");
 
         }
 
@@ -98,6 +106,7 @@ public class ReportServiceImpl implements ReportService {
         } finally {
 
             em.close();
+            logger.info("Recent orders report.");
 
         }
 

@@ -12,10 +12,15 @@ import com.inventotrack.validation.ProductValidator;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import java.util.logging.Logger;
+import com.inventotrack.util.LoggerUtil;
 
 public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO productDAO;
+
+    private static final Logger logger =
+            LoggerUtil.getLogger(ProductServiceImpl.class);
 
     public ProductServiceImpl(ProductDAO productDAO) {
         this.productDAO = productDAO;
